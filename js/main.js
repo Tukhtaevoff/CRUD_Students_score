@@ -252,4 +252,5 @@ filteredForm.addEventListener("submit", (evt) => {
       return studentMarkPercent >= fromValue && studentMarkToAndFrom && searchNameLastName.match(regularExpression);
   })
   renderStudents();
+  // Filter ended
 })
