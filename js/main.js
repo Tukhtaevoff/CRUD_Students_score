@@ -80,10 +80,9 @@ let sum = 0;
 showingStudents.forEach(student => {
   sum += student.mark
 });
-let studentsLength = showingStudents.length;
-const avgTotal = Math.floor(Math.round(sum * TOTAL_MARK_PERCENT / TOTAL_MARK / students.length))
+const avgTotal = Math.round(sum * TOTAL_MARK_PERCENT / TOTAL_MARK / students.length)
 
-if (studentsLength <= 0) {
+if (students.length <= 0) {
   avgDisplay.innerHTML = "Average: 0%";
 } else {
   avgDisplay.innerHTML = `Average: ${avgTotal}%`;
@@ -123,8 +122,9 @@ addForm.addEventListener("submit", (evt) => {
     showingStudents.push(student);
     localStorage.setItem("students", JSON.stringify(students));
   }
+  addForm.reset();
   addStudentModal.hide();
-  window.location.reload();
+  // window.location.reload();
 
 renderStudents();
 })
@@ -142,8 +142,16 @@ studentsTable.addEventListener("click", (evt) => {
     students.splice(clickedBtnId, 1);
     showingStudents.splice(clickedBtnId, 1);
 
+    let items = localStorage.getItem("students");
+
+    items = students.filter(function (item) {
+      if (item.id !== item.id) {
+        return item;
+      }
+    })
+
     localStorage.setItem("students", JSON.stringify(students));
-    localStorage.removeItem(localStorage.getItem("students"));
+    // localStorage.removeItem(localStorage.getItem("students"));
 
     renderStudents();
   } else if (evt.target.matches(".btn-outline-secondary")) {
@@ -220,7 +228,7 @@ filteredForm.addEventListener("submit", (evt) => {
   
   showingStudents = students.sort((a, b) => {
     switch(sortValue) {
-      case "1": {
+      case "1":
         if (a.name > b.name) {
           return 1;
         } else if (b.name > a.name) {
@@ -228,22 +236,21 @@ filteredForm.addEventListener("submit", (evt) => {
         } else {
           return 0;
         }
-      }
       case "2":
         return b.mark - a.mark;
       case "3":
         return a.mark - b.mark;
-      case "4": {
+      case "4": 
         return new Date(a.markedDate).getTime() - new Date(b.markedDate).getTime();
-      }
+      
       default:
         break;
     }
   }).filter((student) => {
 
+    const studentMarkPercent = Math.round(student.mark * TOTAL_MARK_PERCENT / TOTAL_MARK);
       const regularExpression = new RegExp(searchValue, "gi");
 
-      const studentMarkPercent = Math.round(student.mark * TOTAL_MARK_PERCENT / TOTAL_MARK);
 
       const searchNameLastName = `${student.name} ${student.lastName}`;
 
