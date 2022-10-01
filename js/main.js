@@ -73,18 +73,19 @@ const avgDisplay = document.querySelector(".text-end");
 let showingStudents = students.slice();
 
 const renderStudents = () => {
+  let sum = 0;
+
 studentsTableBody.innerHTML = "";
 
 elCount.textContent = `Count: ${showingStudents.length}`;
 
-let sum = 0;
-
 showingStudents.forEach(student => {
   sum += student.mark
 });
-const avgTotal = Math.round(sum * TOTAL_MARK_PERCENT / TOTAL_MARK / students.length)
 
-if (students.length <= 0) {
+const avgTotal = Math.round(sum * TOTAL_MARK_PERCENT / TOTAL_MARK / showingStudents.length)
+
+if (sum <= 0) {
   avgDisplay.innerHTML = "Average: 0%";
 } else {
   avgDisplay.innerHTML = `Average: ${avgTotal}%`;
@@ -93,7 +94,7 @@ if (students.length <= 0) {
 const studentsFragment = document.createDocumentFragment();
 showingStudents.forEach(student => {
     const studentRow = renderStudent(student);
-    studentsFragment.append(studentRow);
+    studentsFragment.appendChild(studentRow);
 })
 studentsTableBody.appendChild(studentsFragment);
 }
