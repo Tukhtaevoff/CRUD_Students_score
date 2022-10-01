@@ -75,6 +75,8 @@ let showingStudents = students.slice();
 const renderStudents = () => {
 studentsTableBody.innerHTML = "";
 
+elCount.textContent = `Count: ${showingStudents.length}`;
+
 let sum = 0;
 
 showingStudents.forEach(student => {
@@ -88,7 +90,6 @@ if (students.length <= 0) {
   avgDisplay.innerHTML = `Average: ${avgTotal}%`;
 }
 
-elCount.textContent = `Count: ${showingStudents.length}`;
 const studentsFragment = document.createDocumentFragment();
 showingStudents.forEach(student => {
     const studentRow = renderStudent(student);
@@ -141,14 +142,6 @@ studentsTable.addEventListener("click", (evt) => {
     });
     students.splice(clickedBtnId, 1);
     showingStudents.splice(clickedBtnId, 1);
-
-    let items = localStorage.getItem("students");
-
-    items = students.filter(function (item) {
-      if (item.id !== item.id) {
-        return item;
-      }
-    })
 
     localStorage.setItem("students", JSON.stringify(students));
     // localStorage.removeItem(localStorage.getItem("students"));
